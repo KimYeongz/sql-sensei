@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"; // Use Inter as standard font (it supp
 import "./globals.css";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Navbar } from "@/components/layout/Navbar";
+import { GamificationProvider } from "@/components/providers/GamificationProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,20 +20,22 @@ export default function RootLayout({
   return (
     <html lang="th">
       <body className={inter.className}>
-        <div className="flex h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 overflow-hidden">
-          {/* Sidebar for Desktop */}
-          <div className="hidden lg:block h-full">
-            <Sidebar />
-          </div>
+        <GamificationProvider>
+          <div className="flex h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 overflow-hidden">
+            {/* Sidebar for Desktop */}
+            <div className="hidden lg:block h-full">
+              <Sidebar />
+            </div>
 
-          {/* Main Content Area */}
-          <div className="flex-1 flex flex-col h-full overflow-hidden">
-            <Navbar />
-            <main className="flex-1 overflow-y-auto p-4 md:p-8">
-              {children}
-            </main>
+            {/* Main Content Area */}
+            <div className="flex-1 flex flex-col h-full overflow-hidden">
+              <Navbar />
+              <main className="flex-1 overflow-y-auto p-4 md:p-8">
+                {children}
+              </main>
+            </div>
           </div>
-        </div>
+        </GamificationProvider>
       </body>
     </html>
   );

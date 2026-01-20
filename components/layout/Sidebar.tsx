@@ -12,6 +12,7 @@ import {
     GraduationCap,
     LayoutDashboard
 } from "lucide-react";
+import { UserXPBar } from "@/components/features/gamification/UserXPBar";
 
 // Translated navigation items
 const navigation = [
@@ -58,6 +59,9 @@ export function Sidebar() {
             </nav>
 
             <div className="p-4 border-t border-slate-800">
+                <div className="mb-4">
+                    <UserXPBar />
+                </div>
                 <div className="p-4 bg-slate-800 rounded-lg text-xs text-slate-400">
                     <p className="font-semibold text-slate-200 mb-1">สถานะ: พร้อมใช้งาน</p>
                     <p>DB: MySQL 8 Compatible</p>

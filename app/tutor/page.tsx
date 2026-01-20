@@ -2,6 +2,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import tutorData from "@/data/tutor_mode.json";
 import { CheckSquare, AlertOctagon, RotateCw } from "lucide-react";
+import { MiniDrillGame } from "@/components/features/gamification/MiniDrillGame";
 
 export default function TutorModePage() {
     return (
@@ -51,26 +52,8 @@ export default function TutorModePage() {
                         </CardContent>
                     </Card>
 
-                    {/* Mini Drill */}
-                    <Card className="bg-slate-900 text-white border-slate-800">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-2 text-emerald-400">
-                                <RotateCw className="w-6 h-6" /> แบบฝึกหัดทดสอบความไว (โจทย์ 10 วิ)
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            {tutorData.mini_drill.map((drill, i) => (
-                                <div key={i} className="group cursor-help">
-                                    <div className="text-sm font-medium text-slate-300 mb-1">{drill.q}</div>
-                                    <div className="text-xs font-mono text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        เฉลย: {drill.a}
-                                    </div>
-                                    <div className="h-px bg-slate-800 my-2 group-last:hidden"></div>
-                                </div>
-                            ))}
-                            <p className="text-xs text-center text-slate-500 pt-4">เอาเมาส์ชี้ที่โจทย์เพื่อดูเฉลย</p>
-                        </CardContent>
-                    </Card>
+                    {/* Mini Drill Game */}
+                    <MiniDrillGame questions={tutorData.mini_drill} />
                 </div>
             </div>
         </div>
