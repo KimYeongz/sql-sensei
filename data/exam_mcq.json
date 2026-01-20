@@ -1,0 +1,727 @@
+[
+    {
+        "id": 1,
+        "question": "หน้าที่หลักของ Primary Key คืออะไร?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "เพื่อทำ Index ให้ค้นหาเร็วเฉยๆ"
+            },
+            {
+                "id": "b",
+                "text": "เพื่อระบุตัวตนของแต่ละแถวอย่างไม่ซ้ำกัน (Uniquely identify)"
+            },
+            {
+                "id": "c",
+                "text": "เพื่ออนุญาตให้มีค่าซ้ำได้"
+            },
+            {
+                "id": "d",
+                "text": "เพื่อจัดการ Format ของวันที่"
+            },
+            {
+                "id": "e",
+                "text": "เพื่อรักษาความปลอดภัยฐานข้อมูล"
+            }
+        ],
+        "answer": "b",
+        "explanation": "Primary Key บังคับว่าข้อมูลต้องไม่ซ้ำ และห้ามเป็น NULL เพื่อใช้ระบุตัวตนของ Record นั้นๆ",
+        "trap": "หลายคนคิดว่ามีไว้เพื่อความเร็ว (Index) อย่างเดียว แต่ความจริงคือเรื่อง Identity"
+    },
+    {
+        "id": 2,
+        "question": "คำสั่ง SQL ใดใช้กรองกลุ่มข้อมูล 'หลังจาก' การจัดกลุ่ม (Aggregation)?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "WHERE"
+            },
+            {
+                "id": "b",
+                "text": "GROUP BY"
+            },
+            {
+                "id": "c",
+                "text": "HAVING"
+            },
+            {
+                "id": "d",
+                "text": "ORDER BY"
+            },
+            {
+                "id": "e",
+                "text": "LIMIT"
+            }
+        ],
+        "answer": "c",
+        "explanation": "จำไว้เสมอ: WHERE กรอง Row ก่อน Group ... HAVING กรอง Group หลัง Aggregate",
+        "trap": "สับสนระหว่าง WHERE กับ HAVING เป็นเรื่องที่ผิดบ่อยที่สุด"
+    },
+    {
+        "id": 3,
+        "question": "ผลลัพธ์ของ 'SELECT 1 + NULL' คืออะไร?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "1"
+            },
+            {
+                "id": "b",
+                "text": "0"
+            },
+            {
+                "id": "c",
+                "text": "NULL"
+            },
+            {
+                "id": "d",
+                "text": "Error"
+            },
+            {
+                "id": "e",
+                "text": "False"
+            }
+        ],
+        "answer": "c",
+        "explanation": "ใน SQL, NULL แปลว่า 'ไม่รู้ค่า' ... อะไรไปบวกกับ 'ไม่รู้' ผลลัพธ์ก็คือ 'ไม่รู้' (NULL)",
+        "trap": "คิดว่า NULL มีค่าเท่ากับ 0 (ผิด)"
+    },
+    {
+        "id": 4,
+        "question": "JOIN แบบไหนที่คืนค่าทุกแถวจากตารางซ้าย และเฉพาะแถวที่ตรงกันจากตารางขวา?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "INNER JOIN"
+            },
+            {
+                "id": "b",
+                "text": "RIGHT JOIN"
+            },
+            {
+                "id": "c",
+                "text": "FULL JOIN"
+            },
+            {
+                "id": "d",
+                "text": "LEFT JOIN"
+            },
+            {
+                "id": "e",
+                "text": "CROSS JOIN"
+            }
+        ],
+        "answer": "d",
+        "explanation": "LEFT JOIN จะยึดตารางตั้งต้น (ซ้าย) เป็นหลัก ข้อมูลซ้ายมาครบเสมอ",
+        "trap": "จำสลับระหว่าง Left/Right ขึ้นอยู่ว่าเขียนตารางไหนก่อน"
+    },
+    {
+        "id": 5,
+        "question": "ACID ในทฤษฎีฐานข้อมูล ย่อมาจากอะไร?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "Automatic, Consistent, Isolated, Durable"
+            },
+            {
+                "id": "b",
+                "text": "Atomicity, Consistency, Isolation, Durability"
+            },
+            {
+                "id": "c",
+                "text": "Atomicity, Concurrency, Isolation, Data"
+            },
+            {
+                "id": "d",
+                "text": "Association, Consistency, Integrity, Durability"
+            },
+            {
+                "id": "e",
+                "text": "ไม่มีข้อถูก"
+            }
+        ],
+        "answer": "b",
+        "explanation": "เป็นคุณสมบัติ 4 ประการของ Transaction ที่ดี",
+        "trap": "มักเดาว่า C คือ Concurrency แต่จริงๆ คือ Consistency"
+    },
+    {
+        "id": 6,
+        "question": "คำสั่งใดใช้เพิ่มแถวใหม่ในตาราง?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "ADD RECORD"
+            },
+            {
+                "id": "b",
+                "text": "INSERT INTO"
+            },
+            {
+                "id": "c",
+                "text": "UPDATE"
+            },
+            {
+                "id": "d",
+                "text": "CREATE ROW"
+            },
+            {
+                "id": "e",
+                "text": "APPEND"
+            }
+        ],
+        "answer": "b",
+        "explanation": "INSERT INTO คือมาตรฐาน SQL ในการเพิ่มข้อมูล",
+        "trap": "UPDATE คือการแก้ไขของเดิม ไม่ใช่เพิ่มใหม่"
+    },
+    {
+        "id": 7,
+        "question": "ลำดับการทำงาน (Execution Order) ข้อใดทำงานเป็นอันดับแรก?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "SELECT"
+            },
+            {
+                "id": "b",
+                "text": "HAVING"
+            },
+            {
+                "id": "c",
+                "text": "FROM"
+            },
+            {
+                "id": "d",
+                "text": "ORDER BY"
+            },
+            {
+                "id": "e",
+                "text": "LIMIT"
+            }
+        ],
+        "answer": "c",
+        "explanation": "Database ต้องรู้ก่อนว่าจะเอาข้อมูลจากไหน (FROM) ถึงจะไปหาคอลัมน์ (SELECT) ได้",
+        "trap": "เราเขียน SELECT คำแรก แต่ Database ทำงานจริงเกือบเป็นขั้นตอนสุดท้าย"
+    },
+    {
+        "id": 8,
+        "question": "DISTINCT มีไว้ทำอะไร?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "เรียงลำดับข้อมูล"
+            },
+            {
+                "id": "b",
+                "text": "ลบแถวที่ซ้ำกันออกจากผลลัพธ์ที่แสดง"
+            },
+            {
+                "id": "c",
+                "text": "เลือกคอลัมน์ที่ต่างกัน"
+            },
+            {
+                "id": "d",
+                "text": "ลบข้อมูลซ้ำออกจากตารางถาวร"
+            },
+            {
+                "id": "e",
+                "text": "จัดกลุ่มข้อมูล"
+            }
+        ],
+        "answer": "b",
+        "explanation": "ใช้ตัดแถวที่หน้าตาเหมือนกันเป๊ะๆ ออกจาก Result Set",
+        "trap": "คิดว่ามันไปลบข้อมูลจริงในตาราง (ไม่ใช่ DML)"
+    },
+    {
+        "id": 9,
+        "question": "Wildcard ตัวไหนใช้แทน 'ตัวอักษรอะไรก็ได้ กี่ตัวก็ได้' ใน LIKE?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "?"
+            },
+            {
+                "id": "b",
+                "text": "*"
+            },
+            {
+                "id": "c",
+                "text": "%"
+            },
+            {
+                "id": "d",
+                "text": "_"
+            },
+            {
+                "id": "e",
+                "text": "#"
+            }
+        ],
+        "answer": "c",
+        "explanation": "% คือตัวแทนของ 0 หรือหลายตัวอักษรใน SQL",
+        "trap": "* ใช้ใน DOS/Shell ไม่ใช่ SQL"
+    },
+    {
+        "id": 10,
+        "question": "Constraint อะไรที่ใช้บังคับว่าห้ามเป็นค่าว่าง?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "UNIQUE"
+            },
+            {
+                "id": "b",
+                "text": "CHECK"
+            },
+            {
+                "id": "c",
+                "text": "NOT NULL"
+            },
+            {
+                "id": "d",
+                "text": "PRIMARY KEY"
+            },
+            {
+                "id": "e",
+                "text": "DEFAULT"
+            }
+        ],
+        "answer": "c",
+        "explanation": "ตรงตัวคือ NOT NULL",
+        "trap": "PK ก็ห้าม NULL แต่ถ้าโจทย์ถามถึง constraint โดยตรงคือ NOT NULL"
+    },
+    {
+        "id": 11,
+        "question": "ฟังก์ชัน Aggregate ตัวไหนที่ไม่สนใจค่า NULL?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "COUNT(*)"
+            },
+            {
+                "id": "b",
+                "text": "SUM()"
+            },
+            {
+                "id": "c",
+                "text": "AVG()"
+            },
+            {
+                "id": "d",
+                "text": "MAX()"
+            },
+            {
+                "id": "e",
+                "text": "ทุกข้อยกเว้น COUNT(*)"
+            }
+        ],
+        "answer": "e",
+        "explanation": "SUM, AVG, MIN, MAX, COUNT(col) จะข้าม NULL ทั้งหมด มีแค่ COUNT(*) ที่นับดะ",
+        "trap": "คิดว่า COUNT(*) ก็ข้าม NULL"
+    },
+    {
+        "id": 12,
+        "question": "ใน MySQL เราจะเลือกข้อมูล 5 แถวแรกยังไง?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "SELECT TOP 5"
+            },
+            {
+                "id": "b",
+                "text": "LIMIT 5"
+            },
+            {
+                "id": "c",
+                "text": "ROWNUM <= 5"
+            },
+            {
+                "id": "d",
+                "text": "FETCH FIRST 5 ROWS ONLY"
+            },
+            {
+                "id": "e",
+                "text": "ขึ้นอยู่กับ SQL Dialect"
+            }
+        ],
+        "answer": "e",
+        "explanation": "แม้มือถือ MySQL จะตอบ LIMIT แต่คีย์เวิร์ดนี้ต่างกันไปตาม DB (แต่ e ถูกที่สุด)",
+        "trap": "จำสับสนกับ SQL Server (TOP) หรือ Oracle (ROWNUM)"
+    },
+    {
+        "id": 13,
+        "question": "Foreign Key คืออะไร?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "กุญแจเข้ารหัสข้อมูลต่างประเทศ"
+            },
+            {
+                "id": "b",
+                "text": "คอลัมน์ที่ใช้อ้างอิงไปยัง PK ของตารางอื่น เพื่อรักษาความถูกต้อง"
+            },
+            {
+                "id": "c",
+                "text": "คีย์ที่ไม่ซ้ำกันจากฐานข้อมูลอื่น"
+            },
+            {
+                "id": "d",
+                "text": "กุญแจสำรอง"
+            },
+            {
+                "id": "e",
+                "text": "ID ที่สุ่มขึ้นมา"
+            }
+        ],
+        "answer": "b",
+        "explanation": "FK ช่วยรักษา Referential Integrity (ความสมบูรณ์ของการอ้างอิง)",
+        "trap": "คิดว่าแค่ลิงก์เฉยๆ โดยไม่มีการเช็คความถูกต้อง"
+    },
+    {
+        "id": 14,
+        "question": "DELETE vs TRUNCATE ต่างกันตรงที่ข้อใดเป็น DDL?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "DELETE"
+            },
+            {
+                "id": "b",
+                "text": "TRUNCATE"
+            },
+            {
+                "id": "c",
+                "text": "ทั้งคู่"
+            },
+            {
+                "id": "d",
+                "text": "ไม่ใช่ทั้งคู่"
+            },
+            {
+                "id": "e",
+                "text": "DROP"
+            }
+        ],
+        "answer": "b",
+        "explanation": "TRUNCATE เป็น DDL (โครงสร้าง) ลบหมดและรีเซ็ต ID เร็วกว่ามาก แต่ Rollback ไม่ได้ (ในบาง DB)",
+        "trap": "คิดว่าเป็นคำสั่งลบข้อมูล (DML) เหมือนกัน"
+    },
+    {
+        "id": 15,
+        "question": "Subquery ใน WHERE clause ส่วนใหญ่คืนค่าแบบไหน?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "ตารางทั้งตาราง"
+            },
+            {
+                "id": "b",
+                "text": "ค่าเดี่ยว หรือ รายการค่า (List of values)"
+            },
+            {
+                "id": "c",
+                "text": "Boolean"
+            },
+            {
+                "id": "d",
+                "text": "ไม่มีค่า"
+            },
+            {
+                "id": "e",
+                "text": "JOIN"
+            }
+        ],
+        "answer": "b",
+        "explanation": "มักใช้คู่กับ IN (List) หรือเครื่องหมายเปรียบเทียบ (Single Value)",
+        "trap": "คิดว่า WHERE รับ Table Object ได้"
+    },
+    {
+        "id": 16,
+        "question": "ข้อใดคือวิธีการเขียนเงื่อนไข If-Else ใน SQL?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "IF()"
+            },
+            {
+                "id": "b",
+                "text": "SWITCH"
+            },
+            {
+                "id": "c",
+                "text": "CASE WHEN ... END"
+            },
+            {
+                "id": "d",
+                "text": "WHILE"
+            },
+            {
+                "id": "e",
+                "text": "FOR"
+            }
+        ],
+        "answer": "c",
+        "explanation": "CASE WHEN คือมาตรฐาน ANSI ของการทำเงื่อนไข",
+        "trap": "IF() มีแค่ใน MySQL/MariaDB แต่ CASE ใช้ได้ทุกที่"
+    },
+    {
+        "id": 17,
+        "question": "ค่า Default ของการเรียงลำดับ ORDER BY คือ?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "DESC (มากไปน้อย)"
+            },
+            {
+                "id": "b",
+                "text": "ASC (น้อยไปมาก)"
+            },
+            {
+                "id": "c",
+                "text": "สุ่ม"
+            },
+            {
+                "id": "d",
+                "text": "ตามลำดับการใส่ข้อมูล"
+            },
+            {
+                "id": "e",
+                "text": "ตาม PK"
+            }
+        ],
+        "answer": "b",
+        "explanation": "ASC (Ascending) คือค่าเริ่มต้น",
+        "trap": "คิดว่าเป็นตามลำดับการ Insert"
+    },
+    {
+        "id": 18,
+        "question": "การ JOIN แบบไหนอาจทำให้ข้อมูลเบิ้ล (Duplicate rows) ถ้าไม่ระวัง?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "Any 1:M Join (หนึ่งไปหลาย)"
+            },
+            {
+                "id": "b",
+                "text": "INNER JOIN เท่านั้น"
+            },
+            {
+                "id": "c",
+                "text": "UNION"
+            },
+            {
+                "id": "d",
+                "text": "UNION ALL"
+            },
+            {
+                "id": "e",
+                "text": "MINUS"
+            }
+        ],
+        "answer": "a",
+        "explanation": "การ Join แม่ (1) ไปหาลูก (Many - เช่น OrderItems) จะทำให้ข้อมูลแม่ถูกก๊อปปี้ซ้ำเท่าจำนวนลูก",
+        "trap": "โทษว่าเป็นเพราะประเภทของ JOIN จริงๆ เป็นเพราะความสัมพันธ์ 1:M"
+    },
+    {
+        "id": 19,
+        "question": "Normalization คืออะไร?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "การสำรองข้อมูล"
+            },
+            {
+                "id": "b",
+                "text": "การจัดโครงสร้างเพื่อลดความซ้ำซ้อน (Redundancy)"
+            },
+            {
+                "id": "c",
+                "text": "การทำข้อมูลให้เป็น type เดียวกัน"
+            },
+            {
+                "id": "d",
+                "text": "การลบข้อมูลเก่า"
+            },
+            {
+                "id": "e",
+                "text": "การทำให้ Query เร็วขึ้น"
+            }
+        ],
+        "answer": "b",
+        "explanation": "ลดความซ้ำซ้อน = ลดโอกาสที่ข้อมูลจะไม่ตรงกัน (Inconsistency)",
+        "trap": "คนมักคิดว่าทำแล้วจะเร็วขึ้น (จริงๆ อาจช้าลงเพราะต้อง Join เยอะ)"
+    },
+    {
+        "id": 20,
+        "question": "คำสั่งเปลี่ยนชนิดข้อมูลของคอลัมน์?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "ALTER TABLE ... MODIFY"
+            },
+            {
+                "id": "b",
+                "text": "UPDATE COLUMN"
+            },
+            {
+                "id": "c",
+                "text": "CHANGE TYPE"
+            },
+            {
+                "id": "d",
+                "text": "SET TYPE"
+            },
+            {
+                "id": "e",
+                "text": "TRANSFORM"
+            }
+        ],
+        "answer": "a",
+        "explanation": "โครงสร้างต้องใช้ ALTER TABLE",
+        "trap": "สับสนกับ UPDATE ที่ใช้แก้ข้อมูลในแถว"
+    },
+    {
+        "id": 21,
+        "question": "Transaction Rollback คืออะไร?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "ทำคำสั่งซ้ำ"
+            },
+            {
+                "id": "b",
+                "text": "ยกเลิกการเปลี่ยนแปลงทั้งหมดตั้งแต่เริ่ม Transaction"
+            },
+            {
+                "id": "c",
+                "text": "ลบตาราง"
+            },
+            {
+                "id": "d",
+                "text": "Backup ข้อมูล"
+            },
+            {
+                "id": "e",
+                "text": "Restart Server"
+            }
+        ],
+        "answer": "b",
+        "explanation": "ย้อนเวลากลับไปจุดเริ่มต้น เหมือนไม่เคยมีอะไรเกิดขึ้น",
+        "trap": "คิดว่าย้อนแค่คำสั่งล่าสุด"
+    },
+    {
+        "id": 22,
+        "question": "วิธีป้องกัน SQL Injection ที่ดีที่สุด?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "SANITIZE (ลบคำแปลกๆ)"
+            },
+            {
+                "id": "b",
+                "text": "PREPARE / Bind Parameters"
+            },
+            {
+                "id": "c",
+                "text": "SECURE"
+            },
+            {
+                "id": "d",
+                "text": "LOCK"
+            },
+            {
+                "id": "e",
+                "text": "CLEAN"
+            }
+        ],
+        "answer": "b",
+        "explanation": "แยก Code ออกจาก Data อย่างชัดเจนแทำให้ Hacker แทรกคำสั่งไม่ได้",
+        "trap": "คิดว่าแค่เขียนฟังก์ชันกรองคำ (Sanitize) ก็พอ (จริงๆ ไม่พอ)"
+    },
+    {
+        "id": 23,
+        "question": "GRANT USAGE ON *.* คือสิทธิ์อะไร?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "ลบ User"
+            },
+            {
+                "id": "b",
+                "text": "ให้สิทธิ์ Admin"
+            },
+            {
+                "id": "c",
+                "text": "แค่ Login ได้เฉยๆ (ไม่มีสิทธิ์ทำอะไรเลย)"
+            },
+            {
+                "id": "d",
+                "text": "สร้าง User"
+            },
+            {
+                "id": "e",
+                "text": "Logout"
+            }
+        ],
+        "answer": "c",
+        "explanation": "USAGE ใน MySQL แปลว่า 'no privileges' แค่มีตัวตนในระบบ",
+        "trap": "แปลตรงตัวว่า 'Usage' = ใช้งานได้ทุกอย่าง"
+    },
+    {
+        "id": 24,
+        "question": "หนึ่งตารางมี Primary Key ได้กี่อัน?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "0 หรือ 1 อัน"
+            },
+            {
+                "id": "b",
+                "text": "กี่อันก็ได้"
+            },
+            {
+                "id": "c",
+                "text": "คอลัมน์ละอัน"
+            },
+            {
+                "id": "d",
+                "text": "ตาม OS"
+            },
+            {
+                "id": "e",
+                "text": "2 อัน"
+            }
+        ],
+        "answer": "a",
+        "explanation": "มีได้แค่ 'ชุดเดียว' (แต่อาจประกอบด้วยหลายคอลัมน์รวมกันเรียกว่า Composite PK)",
+        "trap": "สับสนระหว่าง 'หลายคอลัมน์' กับ 'หลาย Key'"
+    },
+    {
+        "id": 25,
+        "question": "จริงหรือไม่: UNION ตัดตัวซ้ำ, UNION ALL ไม่ตัด?",
+        "choices": [
+            {
+                "id": "a",
+                "text": "จริง"
+            },
+            {
+                "id": "b",
+                "text": "ไม่จริง"
+            },
+            {
+                "id": "c",
+                "text": "เฉพาะ Oracle"
+            },
+            {
+                "id": "d",
+                "text": "เฉพาะเมื่อ Type ตรงกัน"
+            },
+            {
+                "id": "e",
+                "text": "เหมือนกันเป๊ะ"
+            }
+        ],
+        "answer": "a",
+        "explanation": "UNION ต้องเสียเวลาทำ Distinct เพื่อตัดซ้ำ, UNION ALL ไวกว่าเพราะเอามาต่อกันเลย",
+        "trap": "ใช้ UNION พร่ำเพรื่อโดยไม่จำเป็น"
+    }
+]

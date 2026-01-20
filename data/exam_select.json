@@ -1,0 +1,212 @@
+[
+    {
+        "id": 1,
+        "question": "แสดงรายชื่อลูกค้า (id, name) ทุกคนที่ 'เคยสั่งซื้อสินค้าอย่างน้อย 1 ครั้ง'",
+        "solutionSQL": "SELECT DISTINCT c.id, c.name \nFROM customers c \nJOIN orders o ON c.id = o.customer_id;",
+        "explanation": "ใช้ INNER JOIN เพื่อตัดคนที่ไม่เคยซื้อออก และใช้ DISTINCT เพื่อไม่ให้ชื่อซ้ำ (กรณีซื้อหลายรอบ)",
+        "keywords": [
+            "JOIN",
+            "DISTINCT"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 2,
+        "question": "ค้นหาสินค้า (name, price) ที่มีราคามากกว่า 500",
+        "solutionSQL": "SELECT name, price \nFROM products \nWHERE price > 500;",
+        "explanation": "ใช้ WHERE เพื่อกรองราคา",
+        "keywords": [
+            "WHERE"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 3,
+        "question": "นับจำนวนออเดอร์ แยกตามสถานะ (Status)",
+        "solutionSQL": "SELECT status, COUNT(*) \nFROM orders \nGROUP BY status;",
+        "explanation": "จัดกลุ่มด้วย GROUP BY แล้วนับด้วย COUNT",
+        "keywords": [
+            "GROUP BY",
+            "COUNT"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 4,
+        "question": "แสดงลูกค้าทุกคน รวมถึงคนที่ 'ไม่เคยสั่งซื้อ' ด้วย (ให้แสดง order_id เป็น NULL)",
+        "solutionSQL": "SELECT c.name, o.id as order_id \nFROM customers c \nLEFT JOIN orders o ON c.id = o.customer_id;",
+        "explanation": "ใช้ LEFT JOIN เพื่อรักษาลูกค้า (ซ้าย) ไว้ แม้จะไม่มีออเดอร์ (ขวา)",
+        "keywords": [
+            "LEFT JOIN"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 5,
+        "question": "หา 'ราคาเฉลี่ย' ของสินค้าหมวด 'Electronics'",
+        "solutionSQL": "SELECT AVG(price) \nFROM products \nWHERE category = 'Electronics';",
+        "explanation": "กรองหมวดก่อนด้วย WHERE แล้วหาค่าเฉลี่ย",
+        "keywords": [
+            "AVG",
+            "WHERE"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 6,
+        "question": "แสดงหมวดหมู่ที่มีสต็อกรวม มากกว่า 5 ชิ้น",
+        "solutionSQL": "SELECT category \nFROM products \nGROUP BY category \nHAVING SUM(stock) > 5;",
+        "explanation": "กรองผลลัพธ์ของการรวม (Sum) ต้องใช้ HAVING",
+        "keywords": [
+            "HAVING",
+            "SUM"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 7,
+        "question": "ยอดรวมการใช้จ่ายของลูกค้าชื่อ 'Alice Smith'",
+        "solutionSQL": "SELECT SUM(o.total_amount) \nFROM orders o \nJOIN customers c ON o.customer_id = c.id \nWHERE c.name = 'Alice Smith';",
+        "explanation": "Join เพื่อหาชื่อ แล้ว Sum ยอดเงิน",
+        "keywords": [
+            "JOIN",
+            "SUM"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 8,
+        "question": "หาเลขที่ออเดอร์ (id) ที่มีการสั่งซื้อ 'Laptop Pro'",
+        "solutionSQL": "SELECT o.id \nFROM orders o \nJOIN order_items oi ON o.id = oi.order_id \nJOIN products p ON oi.product_id = p.id \nWHERE p.name = 'Laptop Pro';",
+        "explanation": "ต้อง Join 3 ต่อ: Orders -> Items -> Products",
+        "keywords": [
+            "MULTI-JOIN"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 9,
+        "question": "หาลูกค้าที่ 'ไม่เคย' สั่งซื้ออะไรเลย",
+        "solutionSQL": "SELECT c.name \nFROM customers c \nLEFT JOIN orders o ON c.id = o.customer_id \nWHERE o.id IS NULL;",
+        "explanation": "Pattern ยอดฮิต: Left Join แล้วหา NULL ฝั่งขวา",
+        "keywords": [
+            "LEFT JOIN",
+            "IS NULL"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 10,
+        "question": "หาสินค้าที่แพงที่สุด",
+        "solutionSQL": "SELECT name, price \nFROM products \nORDER BY price DESC \nLIMIT 1;",
+        "explanation": "เรียงจากมากไปน้อย แล้วหยิบอันแรก",
+        "keywords": [
+            "ORDER BY",
+            "LIMIT"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 11,
+        "question": "หาลูกค้าที่ซื้อ 'ทั้ง' Laptop Pro 'และ' Wireless Mouse (ต้องมีทั้งคู่)",
+        "solutionSQL": "SELECT c.name \nFROM customers c \nJOIN orders o ON c.id = o.customer_id \nJOIN order_items oi ON o.id = oi.order_id \nJOIN products p ON oi.product_id = p.id \nWHERE p.name IN ('Laptop Pro', 'Wireless Mouse') \nGROUP BY c.id \nHAVING COUNT(DISTINCT p.name) = 2;",
+        "explanation": "เทคนิค Relational Division: กรองเอา 2 อย่างนั้น แล้วนับว่าแต่ละคนมีครบ 2 อย่างไหม",
+        "keywords": [
+            "HAVING",
+            "COUNT DISTINCT"
+        ],
+        "difficulty": "Hard"
+    },
+    {
+        "id": 12,
+        "question": "หาลูกค้าที่จ่ายเงินรวมเยอะที่สุด (Top Spender)",
+        "solutionSQL": "SELECT c.name, SUM(o.total_amount) as total \nFROM customers c \nJOIN orders o ON c.id = o.customer_id \nGROUP BY c.id \nORDER BY total DESC \nLIMIT 1;",
+        "explanation": "รวมยอดต่อคน -> เรียงมากไปน้อย -> ตัดมา 1 คน",
+        "keywords": [
+            "GROUP BY",
+            "ORDER BY"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 13,
+        "question": "รายการจ่ายเงินที่เกิดขึ้นในปี 2023",
+        "solutionSQL": "SELECT * \nFROM payments \nWHERE YEAR(payment_date) = 2023;",
+        "explanation": "ใช้ฟังก์ชัน YEAR() ดึงปีจากวันที่",
+        "keywords": [
+            "DATE FUNC"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 14,
+        "question": "หาสินค้าที่ 'ยังไม่เคยขายออกเลย' (ไม่มีใน order_items)",
+        "solutionSQL": "SELECT name \nFROM products p \nWHERE NOT EXISTS (\n  SELECT 1 FROM order_items oi WHERE oi.product_id = p.id\n);",
+        "explanation": "ใช้ NOT EXISTS เพื่อเช็คว่าไม่มีอยู่ในตารางลูก",
+        "keywords": [
+            "NOT EXISTS"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 15,
+        "question": "แสดงออเดอร์ที่มียอดสูงกว่า 'ค่าเฉลี่ย' ของออเดอร์ทั้งหมด",
+        "solutionSQL": "SELECT id, total_amount \nFROM orders \nWHERE total_amount > (SELECT AVG(total_amount) FROM orders);",
+        "explanation": "ต้องใช้ Subquery หาค่าเฉลี่ยก่อน แล้วค่อยเอามาเทียบ",
+        "keywords": [
+            "SUBQUERY"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 16,
+        "question": "สินค้าขายดี 3 อันดับแรก (นับตามจำนวนชิ้นที่ขาย)",
+        "solutionSQL": "SELECT p.name, SUM(oi.quantity) as sold \nFROM products p \nJOIN order_items oi ON p.id = oi.product_id \nGROUP BY p.id \nORDER BY sold DESC \nLIMIT 3;",
+        "explanation": "Join -> Group -> Sum -> Order -> Limit",
+        "keywords": [
+            "LIMIT",
+            "SUM"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 17,
+        "question": "หาอีเมลที่ 'ซ้ำกัน' ในระบบลูกค้า",
+        "solutionSQL": "SELECT email, COUNT(*) \nFROM customers \nGROUP BY email \nHAVING COUNT(*) > 1;",
+        "explanation": "Group ตามอีเมล แล้วดูว่ากลุ่มไหน Count > 1",
+        "keywords": [
+            "HAVING"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 18,
+        "question": "แสดงออเดอร์พร้อมชื่อลูกค้า ถ้าลูกค้าโดนลบไปแล้วให้ขึ้นว่า 'Anonymous'",
+        "solutionSQL": "SELECT o.id, COALESCE(c.name, 'Anonymous') \nFROM orders o \nLEFT JOIN customers c ON o.customer_id = c.id;",
+        "explanation": "COALESCE จะใช้ค่าถัดไปถ้าค่าแรกเป็น NULL",
+        "keywords": [
+            "COALESCE"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 19,
+        "question": "หาสินค้าราคาแพงอันดับ 2",
+        "solutionSQL": "SELECT name, price \nFROM products \nORDER BY price DESC \nLIMIT 1 OFFSET 1;",
+        "explanation": "ใช้ OFFSET ข้ามอันดับ 1 ไป",
+        "keywords": [
+            "OFFSET"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 20,
+        "question": "สรุปยอดขายรายเดือน ของปี 2023",
+        "solutionSQL": "SELECT MONTH(order_date) as month, SUM(total_amount) \nFROM orders \nWHERE YEAR(order_date) = 2023 \nGROUP BY MONTH(order_date);",
+        "explanation": "Group ด้วยเดือน (ที่ถูกแปลงจากวันที่)",
+        "keywords": [
+            "DATE GROUPING"
+        ],
+        "difficulty": "Medium"
+    }
+]

@@ -1,0 +1,90 @@
+[
+    {
+        "id": "P1",
+        "title": "การกรองข้อมูลพื้นฐาน (Basic Filtering)",
+        "description": "เลือกเฉพาะแถวที่ตรงตามเงื่อนไข",
+        "sql": "SELECT name, email \nFROM customers \nWHERE level = 'GOLD' AND created_at > '2023-01-01';",
+        "explanation": "ใช้ WHERE เพื่อกรองข้อมูล ข้อความต้องอยู่ใน single quotes เสมอ",
+        "trap": "อย่าสับสนระหว่าง = (เท่ากับเป๊ะๆ) กับ LIKE (ค้นหาบางส่วน)"
+    },
+    {
+        "id": "P2",
+        "title": "การสรุปผลตามกลุ่ม (Aggregation)",
+        "description": "นับจำนวนหรือหาค่าเฉลี่ยแบ่งตามหมวดหมู่",
+        "sql": "SELECT category, count(*) as total_items, AVG(price) as avg_price \nFROM products \nGROUP BY category;",
+        "explanation": "ทุกคอลัมน์ใน SELECT ที่ไม่ได้ถูกคำนวณ (Count/Sum) ต้องนำไปใส่ใน GROUP BY เสมอ",
+        "trap": "ถ้าลืมใส่ GROUP BY จะเกิด Error หรือได้ค่ามั่วใน MySQL เวอร์ชันเก่า"
+    },
+    {
+        "id": "P3",
+        "title": "การกรองหลังสรุปผล (Having)",
+        "description": "กรองกลุ่มข้อมูลหลังจากคำนวณแล้ว (เช่น เอาเฉพาะกลุ่มที่ count > 5)",
+        "sql": "SELECT customer_id, count(*) as order_count \nFROM orders \nGROUP BY customer_id \nHAVING count(*) > 5;",
+        "explanation": "ต้องใช้ HAVING เท่านั้นถ้าเงื่อนไขเกี่ยวกับผลรวม (Aggregation)",
+        "trap": "ใช้ WHERE count(*) > 5 จะ Error ทันที (เพราะ WHERE ทำงานก่อนการนับ)"
+    },
+    {
+        "id": "P4",
+        "title": "Header-Detail Join",
+        "description": "ดึงข้อมูลแม่ (Header) มาพร้อมลูก (Detail)",
+        "sql": "SELECT o.id, c.name, o.total_amount \nFROM orders o \nJOIN customers c ON o.customer_id = c.id;",
+        "explanation": "INNER JOIN คือค่ามาตรฐาน โดยจะตัด Order ที่ไม่มีลูกค้า หรือลูกค้าที่ไม่มี Order ทิ้งไป",
+        "trap": "ถ้าอยากได้ลูกค้าที่ยังไม่เคยสั่งซื้อให้ใช้ LEFT JOIN แทน"
+    },
+    {
+        "id": "P5",
+        "title": "การเช็คว่ามีอยู่จริง (Existence Check)",
+        "description": "ตรวจสอบว่ามีข้อมูลในตารางอื่นไหม โดยไม่ดึงข้อมูลนั้นมา",
+        "sql": "SELECT name \nFROM products p \nWHERE EXISTS (\n  SELECT 1 FROM order_items oi \n  WHERE oi.product_id = p.id\n);",
+        "explanation": "EXISTS มักจะเร็วกว่า IN เมื่อข้อมูลเยอะ เพราะมันหยุดทำงานทันทีที่เจอคู่แรก",
+        "trap": "ไม่ต้อง SELECT * ใน Subquery แค่ SELECT 1 ก็พอ (ประหยัด)"
+    },
+    {
+        "id": "P6",
+        "title": "หาค่าสูงสุดในแต่ละกลุ่ม (Top N per Group)",
+        "description": "หาตั๋วที่แพงสุดในแต่ละหมวดหมู่ หรือสินค้าล่าสุดของแต่ละคน",
+        "sql": "SELECT name, category, price \nFROM products p1 \nWHERE price = (\n  SELECT MAX(price) \n  FROM products p2 \n  WHERE p2.category = p1.category\n);",
+        "explanation": "ใช้ Correlated Subquery เพื่อเทียบราคาสินค้ากับ 'ราคาสูงสุดของหมวดตัวเอง'",
+        "trap": "ระวังกรณีคะแนนเท่ากัน (Ties) จะออกมาหลายแถว (Window Function อาจจะดีกว่า)"
+    },
+    {
+        "id": "P7",
+        "title": "CTE (Common Table Expression)",
+        "description": "การแบ่ง Query ยากๆ ให้เป็นชิ้นย่อยที่อ่านง่าย",
+        "sql": "WITH MonthlySales AS (\n  SELECT DATE_FORMAT(order_date, '%Y-%m') as mth, SUM(total_amount) as total \n  FROM orders \n  GROUP BY DATE_FORMAT(order_date, '%Y-%m')\n)\nSELECT * FROM MonthlySales WHERE total > 10000;",
+        "explanation": "CTE สร้างตารางชั่วคราวให้เราอ้างถึงได้ โดยไม่ต้องเขียน Subquery ซ้อนกันจนงง",
+        "trap": "CTE ใช้ได้เฉพาะ MySQL 8.0+ เท่านั้น"
+    },
+    {
+        "id": "P8",
+        "title": "ผลรวมสะสม (Running Total)",
+        "description": "บวกยอดขายสะสมไปเรื่อยๆ ตามเวลา",
+        "sql": "SELECT id, order_date, total_amount, \n  SUM(total_amount) OVER (ORDER BY order_date) as running_total \nFROM orders;",
+        "explanation": "Window Function (OVER) ช่วยคำนวณข้อมูลระดับแถวโดยสัมพันธ์กับแถวอื่น",
+        "trap": "ถ้าลืมใส่ ORDER BY ใน OVER() จะกลายเป็น Grand Total ทั้งหมดแทน"
+    },
+    {
+        "id": "P9",
+        "title": "หาค่าซ้ำ (Finding Duplicates)",
+        "description": "ค้นหาว่ามีข้อมูลไหนซ้ำบ้าง",
+        "sql": "SELECT email, COUNT(*) \nFROM customers \nGROUP BY email \nHAVING COUNT(*) > 1;",
+        "explanation": "จัดกลุ่มด้วยคอลัมน์ที่ไม่ควรซ้ำ แล้วดูว่ากลุ่มไหนมีสมาชิกมากกว่า 1",
+        "trap": "ไม่มีกับดักมากนัก แต่เป็น pattern ที่ใช้บ่อยมาก"
+    },
+    {
+        "id": "P10",
+        "title": "สรุปผลแบบมีเงื่อนไข (Conditional Summaries)",
+        "description": "การนับแยกประเภทในบรรทัดเดียว (Pivot)",
+        "sql": "SELECT \n  SUM(CASE WHEN status = 'PAID' THEN 1 ELSE 0 END) as paid_orders, \n  SUM(CASE WHEN status = 'PENDING' THEN 1 ELSE 0 END) as pending_orders \nFROM orders;",
+        "explanation": "ใช้ CASE WHEN ซ้อนใน SUM เพื่อทำหน้าที่เหมือน 'countif'",
+        "trap": "อย่าเผลอใช้ COUNT แทน SUM เพราะ COUNT(0) ก็นับเป็น 1 (ต้องเป็น NULL ถึงจะไม่นับ)"
+    },
+    {
+        "id": "P11",
+        "title": "การอัปเดตข้ามตาราง (Safe Update)",
+        "description": "ตัดสต็อกสินค้าตามยอดขาย",
+        "sql": "UPDATE products p \nJOIN (\n  SELECT product_id, SUM(quantity) as sold \n  FROM order_items \n  GROUP BY product_id\n) s ON p.id = s.product_id \nSET p.stock = p.stock - s.sold;",
+        "explanation": "MySQL ยอมให้เรา JOIN ในคำสั่ง UPDATE ได้ ทำให้แก้ไขข้อมูลแม่นยำขึ้น",
+        "trap": "ระวังการรันซ้ำ! (Not Idempotent) ถ้ารัน 2 รอบ สต็อกจะหาย 2 เท่า ควรมี flag เช็ค"
+    }
+]

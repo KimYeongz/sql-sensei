@@ -1,0 +1,203 @@
+[
+    {
+        "id": 1,
+        "question": "เขียนคำสั่งสมัครสมาชิกใหม่ชื่อ 'John Doe'",
+        "solutionSQL": "INSERT INTO customers (name, email, level) \nVALUES ('John Doe', 'john@doe.com', 'REGULAR');",
+        "explanation": "คำสั่งพืนฐาน INSERT INTO",
+        "keywords": [
+            "INSERT"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 2,
+        "question": "อัปเดตราคา 'Laptop Pro' เป็น 1100.00",
+        "solutionSQL": "UPDATE products \nSET price = 1100.00 \nWHERE name = 'Laptop Pro';",
+        "explanation": "ต้องมี WHERE เสมอ ไม่งั้นราคาเปลี่ยนทั้งตาราง!",
+        "keywords": [
+            "UPDATE",
+            "WHERE"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 3,
+        "question": "ลบออเดอร์ที่สถานะ CANCELLED ทั้งหมด",
+        "solutionSQL": "DELETE FROM orders \nWHERE status = 'CANCELLED';",
+        "explanation": "ลบแถวตามเงื่อนไข",
+        "keywords": [
+            "DELETE"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 4,
+        "question": "เริ่ม Transaction",
+        "solutionSQL": "START TRANSACTION;",
+        "explanation": "บอก Database ว่าจากจุดนี้ไปคือชุดคำสั่งเดียวกัน",
+        "keywords": [
+            "TRANSACTION"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 5,
+        "question": "ยืนยันการบันทึกข้อมูล (Commit)",
+        "solutionSQL": "COMMIT;",
+        "explanation": "บันทึกถาวรเมื่อมั่นใจว่าทุกอย่างถูกต้อง",
+        "keywords": [
+            "COMMIT"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 6,
+        "question": "ยกเลิกการเปลี่ยนแปลง (Rollback)",
+        "solutionSQL": "ROLLBACK;",
+        "explanation": "เมื่อเกิด Error สั่งยกเลิกทุกอย่างที่ทำมาใน Transaction นี้",
+        "keywords": [
+            "ROLLBACK"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 7,
+        "question": "อนุญาตสิทธิ์ SELECT ตาราง products ให้ user ชื่อ 'app_user'",
+        "solutionSQL": "GRANT SELECT ON products TO 'app_user';",
+        "explanation": "ให้สิทธิ์เท่าที่จำเป็น (Least Privilege)",
+        "keywords": [
+            "GRANT"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 8,
+        "question": "ตัดสต็อกสินค้า ID 5 ลง 1 ชิ้นอย่างปลอดภัย (ห้ามติดลบ)",
+        "solutionSQL": "UPDATE products \nSET stock = stock - 1 \nWHERE id = 5 AND stock > 0;",
+        "explanation": "Atomic update: ใส่เงื่อนไขป้องกันในคำสั่งเดียว ไม่ต้อง Query มาเช็คก่อน",
+        "keywords": [
+            "ATOMIC UPDATE"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 9,
+        "question": "เพิ่มสินค้าหลายชิ้นในคำสั่งเดียว",
+        "solutionSQL": "INSERT INTO products (name, category, price) VALUES \n('A', 'Cat1', 10), \n('B', 'Cat1', 20);",
+        "explanation": "Bulk Insert เร็วกว่าและอ่านง่ายกว่า",
+        "keywords": [
+            "BULK INSERT"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 10,
+        "question": "สร้าง Index ที่คอลัมน์ email ในตาราง customers",
+        "solutionSQL": "CREATE INDEX idx_email ON customers(email);",
+        "explanation": "ช่วยให้ค้นหาด้วย email เร็วขึ้น",
+        "keywords": [
+            "INDEX"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 11,
+        "question": "เกิดอะไรขึ้นถ้า INSERT Primary Key ซ้ำ?",
+        "solutionSQL": "-- Error: Duplicate entry '...' for key 'PRIMARY'",
+        "explanation": "Database จะปฏิเสธและแจ้ง Error ทันที",
+        "keywords": [
+            "ERROR"
+        ],
+        "difficulty": "Easy"
+    },
+    {
+        "id": 12,
+        "question": "ใช้ INSERT IGNORE เพื่อข้ามข้อมูลที่ซ้ำ",
+        "solutionSQL": "INSERT IGNORE INTO customers (id, name) VALUES (1, 'Exists');",
+        "explanation": "ถ้าซ้ำก็ข้ามไปเลย ไม่ Error (แต่ต้องระวัง Data หาย)",
+        "keywords": [
+            "INSERT IGNORE"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 13,
+        "question": "Upsert (ถ้ามีให้อัปเดต ถ้าไม่มีให้เพิ่ม) ใน MySQL เขียนยังไง",
+        "solutionSQL": "INSERT INTO products (id, name, price) VALUES (1, 'New Name', 50) \nON DUPLICATE KEY UPDATE name='New Name', price=50;",
+        "explanation": "Pattern ยอดฮิตสำหรับ Sync ข้อมูล",
+        "keywords": [
+            "ON DUPLICATE KEY"
+        ],
+        "difficulty": "Hard"
+    },
+    {
+        "id": 14,
+        "question": "ลบลูกค้าแล้วให้ออเดอร์หายไปด้วยอัตโนมัติ (สมมติว่าตั้ง FK ไว้แล้ว)",
+        "solutionSQL": "DELETE FROM customers WHERE id = 1;",
+        "explanation": "ถ้า Foreign Key ตั้ง ON DELETE CASCADE ไว้ ลูกจะตายตามแม่ทันที",
+        "keywords": [
+            "CASCADE"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 15,
+        "question": "ล็อกแถวเพื่ออ่าน (คนอื่นห้ามแก้ แต่เรายังไม่แก้)",
+        "solutionSQL": "SELECT * FROM orders WHERE id = 1 FOR SHARE;",
+        "explanation": "Pessimistic Lock แบบ Share Mode",
+        "keywords": [
+            "LOCK"
+        ],
+        "difficulty": "Hard"
+    },
+    {
+        "id": 16,
+        "question": "ล็อกแถวเพื่อเขียน (คนอื่นห้ามแตะ)",
+        "solutionSQL": "SELECT * FROM products WHERE id = 1 FOR UPDATE;",
+        "explanation": "จองแถวนั้นไว้แก้ไข คนอื่นต้องรอจนกว่าเราจะ Commit",
+        "keywords": [
+            "FOR UPDATE"
+        ],
+        "difficulty": "Hard"
+    },
+    {
+        "id": 17,
+        "question": "ถอนสิทธิ์ DELETE ออกจาก user 'intern'",
+        "solutionSQL": "REVOKE DELETE ON *.* FROM 'intern';",
+        "explanation": "เด็กฝึกงานไม่ควรลบข้อมูลได้!",
+        "keywords": [
+            "REVOKE"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 18,
+        "question": "สร้าง View สำหรับ 'Active Orders' (ที่ยังไม่ Cancel)",
+        "solutionSQL": "CREATE VIEW ActiveOrders AS \nSELECT * FROM orders WHERE status IN ('PENDING', 'PAID');",
+        "explanation": "สร้างตารางจำลองให้เรียกใช้ง่ายๆ",
+        "keywords": [
+            "VIEW"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 19,
+        "question": "เปลี่ยนค่า Default ของ status เป็น 'PENDING'",
+        "solutionSQL": "ALTER TABLE orders ALTER status SET DEFAULT 'PENDING';",
+        "explanation": "แก้โครงสร้าง Default Value",
+        "keywords": [
+            "ALTER"
+        ],
+        "difficulty": "Medium"
+    },
+    {
+        "id": 20,
+        "question": "Copy ข้อมูลจากตารางหนึ่งไปอีกตาราง (Archiving)",
+        "solutionSQL": "INSERT INTO archive_orders \nSELECT * FROM orders WHERE order_date < '2022-01-01';",
+        "explanation": "INSERT INTO ... SELECT ใช้ย้ายข้อมูลได้เร็วสุด",
+        "keywords": [
+            "INSERT SELECT"
+        ],
+        "difficulty": "Medium"
+    }
+]

@@ -1,0 +1,61 @@
+{
+    "phases": [
+        {
+            "id": 1,
+            "title": "พื้นฐานและการดึงข้อมูล (Basic Retrieval)",
+            "description": "เริ่มต้นที่นี่ เข้าใจวิธีการดึงข้อมูลจากตารางเดียว (Single Table)",
+            "topics": [
+                "SELECT",
+                "FROM",
+                "WHERE",
+                "ORDER BY",
+                "LIMIT",
+                "Distinct"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "การสรุปผลและการจัดกลุ่ม (Aggregation)",
+            "description": "เรียนรู้วิธีสรุปข้อมูล (Count/Sum) ซึ่งเป็นจุดที่หลายคนตกม้าตาย",
+            "topics": [
+                "COUNT/SUM/AVG",
+                "GROUP BY",
+                "HAVING",
+                "ลำดับการทำงาน (Execution Order)"
+            ]
+        },
+        {
+            "id": 3,
+            "title": "การเชื่อมโยงตาราง (JOINs)",
+            "description": "หัวใจสำคัญของ SQL คือการนำข้อมูลหลายตารางมาประกอบกัน",
+            "topics": [
+                "INNER JOIN",
+                "LEFT JOIN",
+                "การจัดการ NULL",
+                "PK & FK"
+            ]
+        },
+        {
+            "id": 4,
+            "title": "ตรรกะซับซ้อนและ Subqueries",
+            "description": "แก้โจทย์ที่ยากขึ้นโดยการซ้อน Query",
+            "topics": [
+                "Subqueries (IN/EXISTS)",
+                "CASE WHEN",
+                "CTEs (WITH)",
+                "Self Joins"
+            ]
+        },
+        {
+            "id": 5,
+            "title": "การจัดการข้อมูลและความปลอดภัย (DML/Control)",
+            "description": "การเพิ่ม/ลบ/แก้ไขข้อมูล และการกำหนดสิทธิ์",
+            "topics": [
+                "INSERT/UPDATE/DELETE",
+                "Transactions (ACID)",
+                "GRANT/REVOKE",
+                "Constraints"
+            ]
+        }
+    ]
+}

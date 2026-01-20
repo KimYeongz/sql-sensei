@@ -1,0 +1,83 @@
+{
+    "sections": [
+        {
+            "title": "ลำดับการทำงาน (Logical Order of Execution)",
+            "content": [
+                {
+                    "keyword": "FROM/JOIN",
+                    "desc": "เลือกแหล่งข้อมูลและเชื่อมตารางก่อนเสมอ"
+                },
+                {
+                    "keyword": "WHERE",
+                    "desc": "กรองแถวข้อมูล (Row) ก่อนนำไปคำนวณหรือจัดกลุ่ม"
+                },
+                {
+                    "keyword": "GROUP BY",
+                    "desc": "จัดกลุ่มแถวที่มีค่าเหมือนกัน"
+                },
+                {
+                    "keyword": "HAVING",
+                    "desc": "กรองข้อมูล 'หลัง' จากการจัดกลุ่ม (ใช้กับ Aggregate Func)"
+                },
+                {
+                    "keyword": "SELECT",
+                    "desc": "เลือกคอลัมน์ที่จะแสดงผล"
+                },
+                {
+                    "keyword": "ORDER BY",
+                    "desc": "เรียงลำดับผลลัพธ์"
+                },
+                {
+                    "keyword": "LIMIT",
+                    "desc": "จำกัดจำนวนแถวที่จะแสดง"
+                }
+            ]
+        },
+        {
+            "title": "ประเภทของ JOIN",
+            "content": [
+                {
+                    "keyword": "INNER JOIN",
+                    "desc": "เฉพาะแถวที่ 'จับคู่ได้' ทั้งสองฝั่งเท่านั้น"
+                },
+                {
+                    "keyword": "LEFT JOIN",
+                    "desc": "เอาทุกแถวจากตารางซ้าย (ถ้าขวาไม่มีจะเป็น NULL)"
+                },
+                {
+                    "keyword": "RIGHT JOIN",
+                    "desc": "เอาทุกแถวจากตารางขวา (ถ้าซ้ายไม่มีจะเป็น NULL)"
+                },
+                {
+                    "keyword": "FULL JOIN",
+                    "desc": "เอาทุกแถวจากทั้งสองฝั่ง (มี NULL ได้ทั้งสองข้าง)"
+                },
+                {
+                    "keyword": "CROSS JOIN",
+                    "desc": "จับคู่ทุกแถวมารวมกัน (Cartesian Product)"
+                }
+            ]
+        },
+        {
+            "title": "จุดที่มักพลาด (Common Mistakes)",
+            "content": [
+                {
+                    "keyword": "WHERE vs HAVING",
+                    "desc": "WHERE กรองก่อน Group, HAVING กรองหลัง Group"
+                },
+                {
+                    "keyword": "NULL Arithmetic",
+                    "desc": "1 + NULL = NULL เสมอ (ต้องใช้ COALESCE แก้)"
+                },
+                {
+                    "keyword": "COUNT(*)",
+                    "desc": "นับทุกแถว รวมทั้งที่มีค่า NULL"
+                },
+                {
+                    "keyword": "COUNT(col)",
+                    "desc": "นับเฉพาะแถวที่คอลัมน์นั้น 'ไม่เป็น NULL'"
+                }
+            ]
+        }
+    ]
+}
