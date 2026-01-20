@@ -1,0 +1,71 @@
+{
+  "tables": [
+    {
+      "name": "customers",
+      "description": "Registered users who can place orders",
+      "columns": [
+        { "name": "id", "type": "INT", "isPk": true, "extra": "AUTO_INCREMENT" },
+        { "name": "name", "type": "VARCHAR(100)", "constraints": "NOT NULL" },
+        { "name": "email", "type": "VARCHAR(150)", "constraints": "UNIQUE NOT NULL" },
+        { "name": "level", "type": "VARCHAR(20)", "note": "Type: REGULAR, GOLD, PLATINUM" },
+        { "name": "created_at", "type": "DATETIME", "default": "CURRENT_TIMESTAMP" }
+      ]
+    },
+    {
+      "name": "products",
+      "description": "Items available for sale",
+      "columns": [
+        { "name": "id", "type": "INT", "isPk": true, "extra": "AUTO_INCREMENT" },
+        { "name": "name", "type": "VARCHAR(200)", "constraints": "NOT NULL" },
+        { "name": "category", "type": "VARCHAR(50)", "constraints": "NOT NULL" },
+        { "name": "price", "type": "DECIMAL(10,2)", "constraints": "CHECK (price >= 0)" },
+        { "name": "stock", "type": "INT", "default": "0" }
+      ]
+    },
+    {
+      "name": "orders",
+      "description": "Order headers containing status and total",
+      "columns": [
+        { "name": "id", "type": "INT", "isPk": true, "extra": "AUTO_INCREMENT" },
+        { "name": "customer_id", "type": "INT", "isFk": true, "ref": "customers(id)" },
+        { "name": "order_date", "type": "DATETIME", "default": "CURRENT_TIMESTAMP" },
+        { "name": "status", "type": "VARCHAR(20)", "note": "PENDING, PAID, SHIPPED, CANCELLED" },
+        { "name": "total_amount", "type": "DECIMAL(12,2)", "default": "0.00" }
+      ]
+    },
+    {
+      "name": "order_items",
+      "description": "Individual items within an order (M:M customers-products)",
+      "columns": [
+        { "name": "id", "type": "INT", "isPk": true, "extra": "AUTO_INCREMENT" },
+        { "name": "order_id", "type": "INT", "isFk": true, "ref": "orders(id)" },
+        { "name": "product_id", "type": "INT", "isFk": true, "ref": "products(id)" },
+        { "name": "quantity", "type": "INT", "constraints": "CHECK (quantity > 0)" },
+        { "name": "unit_price", "type": "DECIMAL(10,2)", "note": "Price at time of purchase" }
+      ]
+    },
+    {
+      "name": "payments",
+      "description": "Payment records linked to orders",
+      "columns": [
+        { "name": "id", "type": "INT", "isPk": true, "extra": "AUTO_INCREMENT" },
+        { "name": "order_id", "type": "INT", "isFk": true, "ref": "orders(id)", "constraints": "UNIQUE" },
+        { "name": "payment_date", "type": "DATETIME", "default": "CURRENT_TIMESTAMP" },
+        { "name": "amount", "type": "DECIMAL(12,2)", "constraints": "NOT NULL" },
+        { "name": "method", "type": "VARCHAR(50)", "note": "CREDIT_CARD, PAYPAL, TRANSFER" }
+      ]
+    },
+    {
+      "name": "stock_movements",
+      "description": "History of stock changes (Audit log)",
+      "columns": [
+        { "name": "id", "type": "INT", "isPk": true, "extra": "AUTO_INCREMENT" },
+        { "name": "product_id", "type": "INT", "isFk": true, "ref": "products(id)" },
+        { "name": "change_type", "type": "VARCHAR(10)", "note": "IN, OUT, ADJUST" },
+        { "name": "qty_change", "type": "INT", "note": "Negative for OUT" },
+        { "name": "reason", "type": "VARCHAR(255)" },
+        { "name": "created_at", "type": "DATETIME", "default": "CURRENT_TIMESTAMP" }
+      ]
+    }
+  ]
+}
