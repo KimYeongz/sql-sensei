@@ -24,7 +24,7 @@ export function InteractiveSqlLab({ initialSql = "", onRun }: SqlLabProps) {
         const loadDb = async () => {
             try {
                 const SQL = await initSqlJs({
-                    locateFile: file => `/${file}`
+                    locateFile: (file: string) => `/${file}`
                 });
                 const database = new SQL.Database();
                 database.run(LAB_INIT_SQL);
